@@ -9,13 +9,16 @@ public class CalcularConversion {
 
         Map<String, Double> tarifas = tarifasProvider.obtenerTarifas(monedaBase);
 
+        if (tarifas == null || tarifas.isEmpty()) {
+            throw new RuntimeException("La moneda base '" + monedaBase + "' no fue encontrada.");
+        }
+
         if (tarifas.containsKey(monedaDestino)) {
             Double tarifaDeConversion = tarifas.get(monedaDestino);
 
             return cantidad * tarifaDeConversion;
         } else {
-            System.out.println("Error: No se encontró la tasa para " + monedaDestino);
-            return 0.0;
+            throw new RuntimeException("No se encontró la tasa de cambio para: " + monedaDestino);
         }
     }
 }
